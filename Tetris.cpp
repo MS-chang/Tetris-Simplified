@@ -2,24 +2,24 @@
 #include"Mscontrol.h"
 #include"blocks.h"
 using namespace std;
-//ÓÎÏ·ÇøÓòµÄ±íÊ¾£¬0Îª¿Õ°×£¬·ñÔòÎªÓÐ·½¿é¡££¡£¡£¡ÒòÎªÒ»¸ö·½¸ñÕ¼¾ÝÁ½¸öÁÐ£¬µØÍ¼ÉÏÒ»¸öÁÐ¾ÍÊÇÁ½¸ö×Ö·û³¤¶È£¬×¢ÒâÊä³öÎ»ÖÃ
-//¶ÔÓ¦Î»ÖÃµÄÊý×Ö¾ÍÊÇ¶ÔÓ¦µÄÑÕÉ«
+//æ¸¸æˆåŒºåŸŸçš„è¡¨ç¤ºï¼Œ0ä¸ºç©ºç™½ï¼Œå¦åˆ™ä¸ºæœ‰æ–¹å—ã€‚ï¼ï¼ï¼å› ä¸ºä¸€ä¸ªæ–¹æ ¼å æ®ä¸¤ä¸ªåˆ—ï¼Œåœ°å›¾ä¸Šä¸€ä¸ªåˆ—å°±æ˜¯ä¸¤ä¸ªå­—ç¬¦é•¿åº¦ï¼Œæ³¨æ„è¾“å‡ºä½ç½®
+//å¯¹åº”ä½ç½®çš„æ•°å­—å°±æ˜¯å¯¹åº”çš„é¢œè‰²
 int map[32][20] = { 0 };
-//¶íÂÞË¹·½¿éµÄxÇøÓò
+//ä¿„ç½—æ–¯æ–¹å—çš„xåŒºåŸŸ
 const int Game_Yarea = 30;
-//¶íÂÞË¹·½¿éµÄyÇøÓò
+//ä¿„ç½—æ–¯æ–¹å—çš„yåŒºåŸŸ
 const int Game_Xarea = 18;
-//ÉèÖÃ×ø±êÔ­µã£¬¼´×ø±êµÄÆ«ÒÆÁ¿£¬ÔÚ»æÖÆ±³¾°Ê±Ê¹ÓÃÁË
+//è®¾ç½®åæ ‡åŽŸç‚¹ï¼Œå³åæ ‡çš„åç§»é‡ï¼Œåœ¨ç»˜åˆ¶èƒŒæ™¯æ—¶ä½¿ç”¨äº†
 const int ORIGIN[2] = { 2,0 };
-//ÓÎÏ·µÃ·Ö
+//æ¸¸æˆå¾—åˆ†
 int Gamecount=0;
-//·½¿éÏÂ½µËÙ¶È
+//æ–¹å—ä¸‹é™é€Ÿåº¦
 int Downspeed=1;
-//ÓÎÏ·Ä£Ê½£¬ÆæÊýÎªµ¥ÈË£¬Å¼ÊýÎªË«ÈË
+//æ¸¸æˆæ¨¡å¼ï¼Œå¥‡æ•°ä¸ºå•äººï¼Œå¶æ•°ä¸ºåŒäºº
 int Gamemode;
-//Ë«ÈËÄ£Ê½µÄ²Ù×÷¼üÎ»,ÆæÊýÊÇ×ÖÄ¸¼üÎ»
+//åŒäººæ¨¡å¼çš„æ“ä½œé”®ä½,å¥‡æ•°æ˜¯å­—æ¯é”®ä½
 int Conkey;
-//»­³öµ×²¿¿ò¼Ü(2,0)µ½(40,31)
+//ç”»å‡ºåº•éƒ¨æ¡†æž¶(2,0)åˆ°(40,31)
 void Drawbk() 
 {
 	for (int i = 0; i < 20; i++) {
@@ -39,51 +39,51 @@ void Drawbk()
 		map[i+1][19] = 7;
 	}
 }
-//Õ¹Ê¾ÓÎÏ·ÐÅÏ¢
+//å±•ç¤ºæ¸¸æˆä¿¡æ¯
 void ShowInfo() {
 	Gotoxy(43, 3);
 	Setcolor(2 + 8);
-	cout << "µÃ·Ö£º";
+	cout << "Score: ";
 	Gotoxy(47, 5);
 	Setcolor(4 + 8);
 	cout << Gamecount;
 	Gotoxy(43, 8);
 	Setcolor(2 + 8);
-	cout << "ÏÂÒ»¸öÊÇ£º";
+	cout << "Next: ";
 	Setcolor(0);
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 4; j++) {
 			Gotoxy(54+j*2, 8 + i);
-			cout << "¡ö";
+			cout << "â– ";
 		}
 	}
 	for (int i = 0; i < 4; i++) {
 		Gotoxy((nextBlock[i].x )* 2+40, nextBlock[i].y+7);
 		Setcolor(nBcolor);
-		cout << "¡ö";
+		cout << "â– ";
 	}
 	
 	Setcolor(6 + 8);
 	Gotoxy(46, 15);
-	cout << "¡ý S ¼ÓËÙÏòÏÂ";
+	cout << "â†“ S -- Quick Down";
 	Gotoxy(46, 16);
-	cout << "¡ü W »Ö¸´Ô­ËÙ";
+	cout << "â†‘ W -- Slow Down";
 	Gotoxy(46, 17);
-	cout << "¡û A Ïò×óÒÆ¶¯";
+	cout << "â† A -- To Left";
 	Gotoxy(46, 18);
-	cout << "¡ú D ÏòÓÒÒÆ¶¯";
+	cout << "â†’ D -- To right";
 	Gotoxy(46, 19);
-	cout << "L  R ½øÐÐÐý×ª";
+	cout << "L R -- Rotate";
 	Gotoxy(46, 20);
-	cout << "µ¥ÈËÓÎÏ·Ê¹ÓÃ¼ýÍ··ûºÅ";
+	cout << "For one player, use â†“â†’â†‘â†L";
 	Gotoxy(46, 21);
-	cout << "Ë«ÈË×ÖÄ¸ÏÈ²Ù×÷,¼ýÍ·ºó²Ù×÷";
+	cout << "For two players, use â†“â†’â†‘â†L and ASDWR";
 	Gotoxy(46, 25);
 	Setcolor(4 + 8);
-	cout<< "·½¿éÀÛ¼Óµ½²ÊÉ«±ß½çÊ±£¬ÓÎÏ·½áÊø";
+	cout<< "When the clock accumulate to the colorful line, game over.";
 	
 }
-//Ïû³ý¼Æ·Öº¯Êý-----------------------------
+//æ¶ˆé™¤è®¡åˆ†å‡½æ•°-----------------------------
 void Clearup() {
 	int k = 30;
 	for (int i = 30; i > 4; i--) {
@@ -102,19 +102,19 @@ void Clearup() {
 		}
 	}
 }
-//´´½¨ÐÂ¶íÂÞË¹·½¿é£¬´æ´¢µ½nextBlock
+//åˆ›å»ºæ–°ä¿„ç½—æ–¯æ–¹å—ï¼Œå­˜å‚¨åˆ°nextBlock
 void NewNextBlock() {
-	//ÉèÖÃÏà¶ÔÎ»ÖÃ
+	//è®¾ç½®ç›¸å¯¹ä½ç½®
 	Originp.x = 9;
 	Originp.y = 1;
-	nextBlockind = rand() % 7;//Ñ¡³öÄÄÒ»ÖÖ,blocks[blockind]¾ÍÊÇ¶ÔÓ¦µÄ·½¿éÄ£Ê½
+	nextBlockind = rand() % 7;//é€‰å‡ºå“ªä¸€ç§,blocks[blockind]å°±æ˜¯å¯¹åº”çš„æ–¹å—æ¨¡å¼
 	for (int i = 0; i < 4; i++) {
-		nextBlock[i].x = blocks[nextBlockind][i] % 2 + Originp.x;//blocks[blockind][i] % 2ÊÇÔÚÐ¡·½¿éÔÚÏà¶ÔÎ»ÖÃÉÏxµÄÆ«ÒÆÁ¿
-		nextBlock[i].y = blocks[nextBlockind][i] / 2 + Originp.y;//blocks[blockind][i] / 2ÊÇÏà¶ÔyÎ»ÖÃ
+		nextBlock[i].x = blocks[nextBlockind][i] % 2 + Originp.x;//blocks[blockind][i] % 2æ˜¯åœ¨å°æ–¹å—åœ¨ç›¸å¯¹ä½ç½®ä¸Šxçš„åç§»é‡
+		nextBlock[i].y = blocks[nextBlockind][i] / 2 + Originp.y;//blocks[blockind][i] / 2æ˜¯ç›¸å¯¹yä½ç½®
 	}
-	nBcolor = rand() % 6 + 1;//ÉèÖÃÐÂ·½¿éÑÕÉ«
+	nBcolor = rand() % 6 + 1;//è®¾ç½®æ–°æ–¹å—é¢œè‰²
 }
-//½«´æ´¢µ½nextBlockµÄÊý¾Ý¾ß»¯µ½mapÉÏ
+//å°†å­˜å‚¨åˆ°nextBlockçš„æ•°æ®å…·åŒ–åˆ°mapä¸Š
 void ShowNextBlock() {
 	Clearup();
 	cBcolor = nBcolor;
@@ -126,7 +126,7 @@ void ShowNextBlock() {
 		map[currentBlock[i].y][currentBlock[i].x] = cBcolor;
 	}
 }
-//¼ì²éÒÆ¶¯ºóµÄ·Å¿éÊÇ²»ÊÇÓÐÒÑ´æÔÚµÄ·½¿éÖØµþ
+//æ£€æŸ¥ç§»åŠ¨åŽçš„æ”¾å—æ˜¯ä¸æ˜¯æœ‰å·²å­˜åœ¨çš„æ–¹å—é‡å 
 bool check() {
 	for (int i = 0; i < 4; i++) {
 		if (map[currentBlock[i].y][currentBlock[i].x]) {
@@ -135,7 +135,7 @@ bool check() {
 	}
 	return true;
 }
-//ÊµÏÖ·½¿é×Ô¶¯ÏÂ½µ
+//å®žçŽ°æ–¹å—è‡ªåŠ¨ä¸‹é™
 void Automove(int *a) {
 	for (int k = 0; k < *a; k++) {
 		for (int i = 0; i < 4; i++) {
@@ -160,7 +160,7 @@ void Automove(int *a) {
 		}
 	}
 }
-//¿ØÖÆ·½¿éÔË¶¯×óÓÒÒÆ
+//æŽ§åˆ¶æ–¹å—è¿åŠ¨å·¦å³ç§»
 void MoveLorR(int a) {
 	for (int i = 0; i < 4; i++) {
 		bakBlock[i] = currentBlock[i];
@@ -176,24 +176,24 @@ void MoveLorR(int a) {
 		map[currentBlock[i].y][currentBlock[i].x] = cBcolor;
 	}
 }
-//Ðý×ªº¯Êý
+//æ—‹è½¬å‡½æ•°
 void BlockTurn() {
-	/*ÀûÓÃÒÑÖªµÄÊýÑ§¹«Ê½£¬½øÐÐÐý×ª£¬ÇóµÃÃ¿Ò»¸öÐ¡·½¿éÐý×ªºóµÄ×ø±ê*/
-	//ÏÈ±¸·Ýµ±Ç°·½¿é,²¢½øÐÐÔ­Î»ÖÃÇå¿Õ
+	/*åˆ©ç”¨å·²çŸ¥çš„æ•°å­¦å…¬å¼ï¼Œè¿›è¡Œæ—‹è½¬ï¼Œæ±‚å¾—æ¯ä¸€ä¸ªå°æ–¹å—æ—‹è½¬åŽçš„åæ ‡*/
+	//å…ˆå¤‡ä»½å½“å‰æ–¹å—,å¹¶è¿›è¡ŒåŽŸä½ç½®æ¸…ç©º
 	for (int i = 0; i < 4; i++) {
 		bakBlock[i] = currentBlock[i];
 		map[bakBlock[i].y][bakBlock[i].x] = 0;
 	}
-	//È·¶¨Ðý×ªÖÐÐÄ£¬ÕâÀïÑ¡È¡µÚ¶þ¸ö·½¿é
-	//Ì×¹«Ê½½øÐÐ¼ÆËã
-	/*   x×ø±ê£º a[i].x  =  p.y - a[i].y + p.x  
-	     y×ø±ê£º a[i].y  =  a[i].x - p.x + p.y  */
+	//ç¡®å®šæ—‹è½¬ä¸­å¿ƒï¼Œè¿™é‡Œé€‰å–ç¬¬äºŒä¸ªæ–¹å—
+	//å¥—å…¬å¼è¿›è¡Œè®¡ç®—
+	/*   xåæ ‡ï¼š a[i].x  =  p.y - a[i].y + p.x  
+	     yåæ ‡ï¼š a[i].y  =  a[i].x - p.x + p.y  */
 	for (int i = 0; i < 4; i++) {
 		Point temp = currentBlock[i];
 		currentBlock[i].x = bakBlock[1].y - temp.y + bakBlock[1].x;
 		currentBlock[i].y = temp.x - bakBlock[1].x + bakBlock[1].y;
 	}
-	//¼ì²éºÏ·¨ÐÔ
+	//æ£€æŸ¥åˆæ³•æ€§
 	if (!check() ){
 		for (int i = 0; i < 4; i++) {
 			currentBlock[i] = bakBlock[i];
@@ -205,30 +205,30 @@ void BlockTurn() {
 		}
 	}
 }
-//µ÷ÓÃÖÐÊà
+//è°ƒç”¨ä¸­æž¢
 void TetrisContronl() {
 	if (_kbhit()) {
 		int c1=_getch();
 		if (Conkey%2==0) {
-			//×óÓÒÒÆ¶¯--------------------------------
+			//å·¦å³ç§»åŠ¨--------------------------------
 			if (c1 == 224) {
 				c1 = _getch();
 				switch (c1) {
-				case 72://ÉÏ¼ü
+				case 72://ä¸Šé”®
 					Downspeed = 1;
 					break;
-				case 80://ÏÂ¼ü
+				case 80://ä¸‹é”®
 					Downspeed = 2;
 					break;
-				case 75://×ó¼ü
+				case 75://å·¦é”®
 					MoveLorR(1);
 					break;
-				case 77://ÓÒ¼ü
+				case 77://å³é”®
 					MoveLorR(-1);
 					break;
 				}
 			}
-			//·­×ª²Ù×÷---------------------------------
+			//ç¿»è½¬æ“ä½œ---------------------------------
 			if (c1 == 'l' || c1 == 'L') {
 				if (blockind != 6) {
 					BlockTurn();
@@ -238,23 +238,23 @@ void TetrisContronl() {
 		else{
 			switch (c1) {
 			case'w':
-			case'W'://ÉÏ¼ü
+			case'W'://ä¸Šé”®
 				Downspeed = 1;
 				break;
 			case 'S':
-			case's'://ÏÂ¼ü
+			case's'://ä¸‹é”®
 				Downspeed = 2;
 				break;
 			case 'A':
-			case 'a'://×ó¼ü
+			case 'a'://å·¦é”®
 				MoveLorR(1);
 				break;
 			case 'D':
-			case 'd'://ÓÒ¼ü
+			case 'd'://å³é”®
 				MoveLorR(-1);
 				break;
 			}
-			//·­×ª²Ù×÷---------------------------------
+			//ç¿»è½¬æ“ä½œ---------------------------------
 			if (c1 == 'R' || c1 == 'r') {
 				if (blockind != 6) {
 					BlockTurn();
@@ -264,7 +264,7 @@ void TetrisContronl() {
 
 	}
 }
-//ÓÎÏ·½áÊøº¯Êý,·µ»ØÖµtrueÔò½áÊø
+//æ¸¸æˆç»“æŸå‡½æ•°,è¿”å›žå€¼trueåˆ™ç»“æŸ
 bool EndGame() {
 	for (int i = 0; i < 4; i++) {
 		map[currentBlock[i].y][currentBlock[i].x] = 0;
@@ -281,27 +281,27 @@ bool EndGame() {
 	}
 	return false;
 }
-//ÐÎ³É»­Ãæ
+//å½¢æˆç”»é¢
 void Drawblocks() {
-	for (int i = 0; i < 32; i++) {//ÐÐÑ­»·
-		for (int j = 0; j < 20; j++) {//ÁÐÑ­»·
-			//»­·½¿é
+	for (int i = 0; i < 32; i++) {//è¡Œå¾ªçŽ¯
+		for (int j = 0; j < 20; j++) {//åˆ—å¾ªçŽ¯
+			//ç”»æ–¹å—
 			Setcolor(map[i][j]);
 			Gotoxy(ORIGIN[0]+j*2, ORIGIN[1]+i);
-			printf("¡ö");
+			printf("â– ");
 		}
 	}
 }
 int main() {
-	cout << "ÇëÑ¡ÔñÓÎÏ·Ä£Ê½£º\n1 for µ¥ÈË\n2 for Ë«ÈË\n";
+	cout << "è¯·é€‰æ‹©æ¸¸æˆæ¨¡å¼ï¼š\n1 for å•äºº\n2 for åŒäºº\n";
 	Gamemode = _getch();
 	Conkey = Gamemode - 1;
 	Setcolor(4 + 8);
 	if (Gamemode%2==0) {
-		cout << "Ë«ÈË×ÖÄ¸ÏÈ²Ù×÷,¼ýÍ·ºó²Ù×÷";
+		cout << "åŒäººå­—æ¯å…ˆæ“ä½œ,ç®­å¤´åŽæ“ä½œ";
 	}
 	else {
-		cout << "¼ýÍ·½øÐÐ²Ù×÷";
+		cout << "ç®­å¤´è¿›è¡Œæ“ä½œ";
 	}
 	Sleep(2500);
 	system("mode con cols=80 lines=35");
